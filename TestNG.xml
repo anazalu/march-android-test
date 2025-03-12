@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="TestCase">
+    <test verbose="2" name="/Users/anastasijazalunina/Documents/Projects/MarchTest">
+        <parameter name="username" value="standard_user"></parameter>
+        <groups>
+            <run>
+                <include name="TC1"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="TestCases"/>
+        </classes>
+    </test>
+</suite>
