@@ -27,9 +27,9 @@ public class DriverMethods {
 
     public static void tapOnCoordinates(int x, int y) {
         driver.executeScript("mobile: clickGesture", Map.ofEntries(
-                        Map.entry("x", x),
-                        Map.entry("y", y)
-                ));
+                Map.entry("x", x),
+                Map.entry("y", y)
+        ));
 
 //                ImmutableMap.of(
 //                "x", ((RemoteWebElement) element).getId()));
@@ -66,7 +66,7 @@ public class DriverMethods {
     }
 
     public static void dragByCoord(int startX, int startY, int endX,
-                                    int endY, int speed) {
+                                   int endY, int speed) {
         driver.executeScript("mobile: dragGesture", Map.ofEntries(
                 Map.entry("startX", startX),
                 Map.entry("startY", startY),
@@ -77,7 +77,7 @@ public class DriverMethods {
     }
 
     public static void dragElemToCoord(WebElement element, int endX,
-                                   int endY, int speed) {
+                                       int endY, int speed) {
         driver.executeScript("mobile: dragGesture", Map.ofEntries(
                 Map.entry("elementId", ((RemoteWebElement) element).getId()),
                 Map.entry("endX", endX),
