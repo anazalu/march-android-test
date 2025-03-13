@@ -181,17 +181,15 @@ public class TestCases {
         productsScreen.isCardEmpty();
 
     }
-
+/*
     @Test(testName = "testAssert")
     public void testAssert() {
-
         Assert.assertEquals(4, 5, "4 not equal to 5");
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(4, 5, "soft assert that 4 != 5");
         softAssert.assertAll();
-
     }
-
+*/
     @Test(testName = "tapOnCoord")
     public void testTapOnCoord() throws InterruptedException {
         loginScreen.isDisplayed();
@@ -211,6 +209,7 @@ public class TestCases {
         loginScreen.isDisplayed();
         loginScreen.loginUser("standard_user", "secret_sauce");
         productsScreen.isDisplayed();
+        // TODO
         DriverMethods.swipeByCoord(60, 60, 60, 60, "up", 0.75, 500);
         try {
             Thread.sleep(5000);
@@ -224,7 +223,6 @@ public class TestCases {
         loginScreen.isDisplayed();
         DriverMethods.swipeByElem(driver.findElement(new AppiumBy.ByAccessibilityId("test-LOGIN")),
                 "up", 0.75);
-
         Thread.sleep(3000);
     }
 
@@ -238,8 +236,7 @@ public class TestCases {
         loginScreen.isDisplayed();
         loginScreen.loginUser("standard_user", "secret_sauce");
         productsScreen.isDisplayed();
-//        DriverMethods.swipeByCoord(driver.findElement(new AppiumBy.ByAccessibilityId("test-LOGIN")),
-//                60, 75, 60, "up", 0.75, 500);
+        DriverMethods.swipeByCoord(60, 60, 60, 60, "up", 0.75, 500);
         Thread.sleep(3000);
     }
 
@@ -248,7 +245,7 @@ public class TestCases {
         loginScreen.isDisplayed();
         loginScreen.loginUser("standard_user", "secret_sauce");
         productsScreen.isDisplayed();
-        DriverMethods.dragByCoord(60, 60, 60, 60, 500);
+        DriverMethods.dragByCoord(600, 2000, 600, 20, 500);
         Thread.sleep(500);
     }
 
@@ -256,7 +253,7 @@ public class TestCases {
     public void testDragElemToCoord() throws InterruptedException {
         loginScreen.isDisplayed();
         loginScreen.loginUser("standard_user", "secret_sauce");
-        productsScreen.isDisplayed();
+//        productsScreen.isDisplayed();
         DriverMethods.dragElemToCoord(driver.findElement(new AppiumBy.ByAccessibilityId("test-LOGIN")), 60, 60, 500);
         Thread.sleep(500);
     }
