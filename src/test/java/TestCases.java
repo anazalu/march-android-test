@@ -1,34 +1,28 @@
+import dataObjects.User;
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import org.testng.Assert;
 import org.testng.Reporter;
 import org.testng.annotations.*;
-
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.time.Duration;
-import java.util.Map;
-
 import org.testng.asserts.SoftAssert;
 import screens.CartScreen;
 import screens.CheckoutScreen;
 import screens.LoginScreen;
 import screens.ProductsScreen;
-
-import dataObjects.User;
 import utils.DriverMethods;
 import utils.MyCustomListener;
 import utils.TestProperties;
+
+import java.io.File;
+import java.net.MalformedURLException;
+import java.time.Duration;
 
 @Listeners(MyCustomListener.class)
 public class TestCases {
@@ -41,6 +35,21 @@ public class TestCases {
     public ProductsScreen productsScreen;
     public CartScreen cartScreen;
     public CheckoutScreen checkoutScreen;
+
+    @DataProvider(name = "valid-user-data")
+    public static Object[][] getUserData() {
+        return new Object[][]{
+                {"standard_user", "secret_sauceXXXX"},
+                {"standard_user", "secret_sauce"}
+        };
+    }
+
+    @DataProvider(name = "valid-user-data3")
+    public static Object[][] getUserData3() {
+        return new Object[][]{
+                {"standard_user", "secret_sauce"}
+        };
+    }
 
     @BeforeClass(alwaysRun = true)
     public void beforeClassSetup() throws MalformedURLException {
@@ -106,9 +115,9 @@ public class TestCases {
     }
 
     @Test(testName = "testFour",
-        description = "Makeover of testThree with Data Provider",
-        dataProvider = "valid-user-data2",
-        dataProviderClass = UserData.class)
+            description = "Makeover of testThree with Data Provider",
+            dataProvider = "valid-user-data2",
+            dataProviderClass = UserData.class)
     public void testFour(User user) {
         Reporter.log("username: " + user.getUserName() + "; password: " + user.getPassword());
         loginScreen.isDisplayed();
@@ -220,7 +229,7 @@ public class TestCases {
     }
 
     @Test(testName = "openMenuBySwipe")
-    public void testOpenMenuBySwipe() throws InterruptedException{
+    public void testOpenMenuBySwipe() throws InterruptedException {
         Dimension screensize = driver.manage().window().getSize();
         int screenWid = screensize.getWidth();
         int screenWHei = screensize.getHeight();
@@ -235,7 +244,7 @@ public class TestCases {
     }
 
     @Test(testName = "dragByCoord")
-    public void testDragByCoord() throws InterruptedException{
+    public void testDragByCoord() throws InterruptedException {
         loginScreen.isDisplayed();
         loginScreen.loginUser("standard_user", "secret_sauce");
         productsScreen.isDisplayed();
@@ -244,7 +253,7 @@ public class TestCases {
     }
 
     @Test(testName = "dragElemToCoord")
-    public void testDragElemToCoord() throws InterruptedException{
+    public void testDragElemToCoord() throws InterruptedException {
         loginScreen.isDisplayed();
         loginScreen.loginUser("standard_user", "secret_sauce");
         productsScreen.isDisplayed();
@@ -268,20 +277,5 @@ public class TestCases {
     public void afterClassCleanup() {
         driver.quit();
         server.stop();
-    }
-
-    @DataProvider(name = "valid-user-data")
-    public static Object[][] getUserData() {
-        return new Object[][] {
-                {"standard_user","secret_sauceXXXX"},
-                {"standard_user","secret_sauce"}
-        };
-    }
-
-    @DataProvider(name = "valid-user-data3")
-    public static Object[][] getUserData3() {
-        return new Object[][] {
-                {"standard_user","secret_sauce"}
-        };
     }
 }

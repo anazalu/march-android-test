@@ -1,10 +1,8 @@
 package screens;
 
-import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -17,11 +15,11 @@ public class ProductsScreen {
     private AndroidDriver driver;
     private WebDriverWait wait;
 
-//    @AndroidFindBy(uiAutomator = "new UiSelector().text(\"PRODUCTS\")")
+    //    @AndroidFindBy(uiAutomator = "new UiSelector().text(\"PRODUCTS\")")
     @AndroidFindBy(xpath = "//android.widget.TextView[@text=\"PRODUCTS\"]")
     private WebElement productsTextView;
 
-//    @AndroidFindBy(uiAutomator = "new UiSelector().description(\"test-ADD TO CART\")")
+    //    @AndroidFindBy(uiAutomator = "new UiSelector().description(\"test-ADD TO CART\")")
 //    new UiSelector().description("test-ADD TO CART")
 //    @AndroidFindBy(accessibility = "test-ADD TO CART")
     @AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc=\"test-Item\"]//android.view.ViewGroup[@clickable='true' and preceding-sibling::android.widget.TextView[@content-desc=\"test-Price\"]]")

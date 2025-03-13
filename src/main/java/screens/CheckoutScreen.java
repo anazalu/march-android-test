@@ -29,7 +29,7 @@ public class CheckoutScreen {
     @AndroidFindBy(accessibility = "test-CONTINUE")
     private WebElement continueButton;
 
-//    @AndroidFindBy(xpath = "//android.widget.TextView[@text=\"CHECKOUT: OVERVIEW\"]")
+    //    @AndroidFindBy(xpath = "//android.widget.TextView[@text=\"CHECKOUT: OVERVIEW\"]")
     @AndroidFindBy(uiAutomator = "new UiSelector().text(\"CHECKOUT: OVERVIEW\")")
     private WebElement checkoutOverviewTextView;
 

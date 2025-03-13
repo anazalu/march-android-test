@@ -5,7 +5,7 @@
         <parameter name="username" value="standard_user"></parameter>
         <groups>
             <run>
-                <include name="TC1"/>
+<!--                <include name="TC1"/>-->
             </run>
         </groups>
         <classes>

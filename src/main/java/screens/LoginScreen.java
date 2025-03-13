@@ -1,20 +1,16 @@
 package screens;
 
-import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import io.appium.java_client.pagefactory.HowToUseLocators;
 import io.appium.java_client.pagefactory.LocatorGroupStrategy;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-
-import static io.appium.java_client.pagefactory.LocatorGroupStrategy.ALL_POSSIBLE;
 
 public class LoginScreen {
     private AndroidDriver driver;
@@ -24,7 +20,8 @@ public class LoginScreen {
     private WebElement loginViewElement;
 
     @HowToUseLocators(androidAutomation = LocatorGroupStrategy.ALL_POSSIBLE)
-    @AndroidFindBy(uiAutomator = "new UiSelector().text(\"Username\")", priority = 1) @AndroidFindBy(accessibility = "test-Username")
+    @AndroidFindBy(uiAutomator = "new UiSelector().text(\"Username\")", priority = 1)
+    @AndroidFindBy(accessibility = "test-Username")
 
     private WebElement userNameField;
 
