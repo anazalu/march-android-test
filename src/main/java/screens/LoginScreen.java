@@ -46,4 +46,10 @@ public class LoginScreen {
         wait.until(ExpectedConditions.visibilityOf(passwordField)).sendKeys(password);
         wait.until(ExpectedConditions.visibilityOf(loginButton)).click();
     }
+
+    public void loginStandardUser() {
+        wait.until(ExpectedConditions.visibilityOf(userNameField)).sendKeys("standard_user");
+        wait.until(ExpectedConditions.visibilityOf(passwordField)).sendKeys("secret_sauce");
+        wait.until(ExpectedConditions.visibilityOf(loginButton)).click();
+    }
 }

@@ -1,5 +1,8 @@
 target/
 test-output/
+extent-reports/
+
+appium-server-logs.log
 
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/

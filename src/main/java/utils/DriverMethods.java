@@ -19,6 +19,10 @@ public class DriverMethods {
         DriverMethods.driver = driver;
     }
 
+    public static String getScreenshot() {
+        return driver.getScreenshotAs(OutputType.BASE64);
+    }
+
     public static void logScreenShot() {
         String src = driver.getScreenshotAs(OutputType.BASE64);
         String path = "<img src=\"data:image/png;base64, " + src + "\" width=\"*\" height=\"350\"";
@@ -30,21 +34,15 @@ public class DriverMethods {
                 Map.entry("x", x),
                 Map.entry("y", y)
         ));
-
-//                ImmutableMap.of(
-//                "x", ((RemoteWebElement) element).getId()));
     }
 
     public static void tapOnElem(WebElement element) {
         driver.executeScript("mobile: clickGesture", Map.ofEntries(
                 Map.entry("elementId", ((RemoteWebElement) element).getId())));
-
-//                ImmutableMap.of(
-//                "x", ((RemoteWebElement) element).getId()));
     }
 
-    public static void swipeByCoord(int left, int top, int width,
-                                    int height, String direction, Double percent, int speed) {
+    public static void swipeByCoord(int top, int left, int width, int height,
+                                    String direction, Double percent, int speed) {
         driver.executeScript("mobile: swipeGesture", Map.ofEntries(
                 Map.entry("left", left),
                 Map.entry("top", top),
@@ -56,12 +54,12 @@ public class DriverMethods {
         ));
     }
 
-    public static void swipeByElem(WebElement element, String direction, Double percent) {
+    public static void swipeByElem(WebElement element, String direction, Double percent, int speed) {
         driver.executeScript("mobile: swipeGesture", Map.ofEntries(
                 Map.entry("elementId", ((RemoteWebElement) element).getId()),
-                Map.entry("direction", "up"),
-                Map.entry("percent", 0.75),
-                Map.entry("speed", 500)
+                Map.entry("direction", direction),
+                Map.entry("percent", percent),
+                Map.entry("speed", speed)
         ));
     }
 
@@ -95,4 +93,30 @@ public class DriverMethods {
         driver.perform(List.of(tap));
     }
 
+    public static void activateApp() {
+        driver.executeScript("mobile: activateApp", Map.ofEntries(
+                Map.entry("appId", "com.swaglabsmobileapp")
+        ));
+    }
+
+    public static String getDeviceInfo () {
+        String deviceManufacturer = (String) driver.executeScript("mobile: shell", Map.ofEntries(
+                Map.entry("command", "getprop"),
+//                Map.entry("args", "ro.product.brand"),
+                Map.entry("args", "ro.product.manufacturer")
+        ));
+
+        String deviceModel = (String) driver.executeScript("mobile: shell", Map.ofEntries(
+                Map.entry("command", "getprop"),
+//                Map.entry("args", "ro.product.brand"),
+                Map.entry("args", "ro.product.model")
+        ));
+
+        String deviceOSVersion = (String) driver.executeScript("mobile: shell", Map.ofEntries(
+                Map.entry("command", "getprop"),
+//                Map.entry("args", "ro.product.brand"),
+                Map.entry("args", "ro.product.build.version.release")
+        ));
+        return deviceManufacturer + " " + deviceModel + " " + deviceOSVersion;
+    }
 }
