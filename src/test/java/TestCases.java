@@ -3,15 +3,15 @@ import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
+import io.appium.java_client.service.local.flags.GeneralServerFlag;
+import io.appium.java_client.service.local.flags.ServerArgument;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 import org.testng.Reporter;
 import org.testng.annotations.*;
-import org.testng.asserts.SoftAssert;
 import screens.CartScreen;
 import screens.CheckoutScreen;
 import screens.LoginScreen;
@@ -21,8 +21,10 @@ import utils.MyCustomListener;
 import utils.TestProperties;
 
 import java.io.File;
-import java.net.MalformedURLException;
 import java.time.Duration;
+import java.util.Map;
+
+import static reports.ExtentTestManager.getTest;
 
 @Listeners(MyCustomListener.class)
 public class TestCases {
@@ -52,11 +54,12 @@ public class TestCases {
     }
 
     @BeforeClass(alwaysRun = true)
-    public void beforeClassSetup() throws MalformedURLException {
+    public void beforeClassSetup() {
 //        server = AppiumDriverLocalService.buildDefaultService();
         AppiumServiceBuilder appiumServiceBuilder = new AppiumServiceBuilder();
         appiumServiceBuilder.usingPort(4724);
         appiumServiceBuilder.withLogFile(new File("appium-server-logs.log"));
+        appiumServiceBuilder.withArgument(GeneralServerFlag.RELAXED_SECURITY);
         server = appiumServiceBuilder.build();
         server.clearOutPutStreams();
         server.start();
@@ -80,11 +83,17 @@ public class TestCases {
 
     @BeforeMethod(alwaysRun = true)
     public void beforeMethodSetup() {
-        driver.activateApp("com.swaglabsmobileapp");
+//        driver.activateApp("com.swaglabsmobileapp");
+//        driver.getBatteryInfo();
+//        driver.executeScript("mobile: activateApp", Map.ofEntries(
+//                Map.entry("appId", "com.swaglabsmobileapp")
+//        ));
+        DriverMethods.activateApp();
     }
 
     @Parameters("username")
-    @Test(testName = "testOne", description = "Test without POM", groups = {"TC1", "regression"})
+//    @Test(testName = "testOne", description = "Test without POM", groups = {"TC1", "regression"})
+    @Test(groups = {"TC1", "regression", "smoke", "loginTest"})
     public void testOne(String username) {
         wait.until(ExpectedConditions.visibilityOfElementLocated(new AppiumBy.ByAccessibilityId("test-Login")));
         driver.findElement(new AppiumBy.ByAccessibilityId("test-Login"));
@@ -101,6 +110,7 @@ public class TestCases {
     public void testTwo() {
         loginScreen.isDisplayed();
         loginScreen.loginUser("standard_user", "secret_sauce");
+        getTest().info("User logged in ; Username: standard_user ; Password: secret_sauce");
         productsScreen.isDisplayed();
     }
 
@@ -205,24 +215,23 @@ public class TestCases {
     }
 
     @Test(testName = "swipeByCoord")
-    public void testSwipeByCoord() {
+    public void testSwipeByCoord() throws InterruptedException {
         loginScreen.isDisplayed();
-        loginScreen.loginUser("standard_user", "secret_sauce");
+        loginScreen.loginStandardUser();
         productsScreen.isDisplayed();
+        Dimension screenSize = driver.manage().window().getSize();
+        int screenWid = screenSize.getWidth();
+        int screenHei = screenSize.getHeight();
         // TODO
-        DriverMethods.swipeByCoord(60, 60, 60, 60, "up", 0.75, 500);
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        DriverMethods.swipeByCoord(screenHei / 4, screenWid /4, screenWid, screenHei, "up", 0.75, 500);
+        Thread.sleep(5000);
     }
 
     @Test(testName = "swipeOnElem")
     public void testSwipeOnElem() throws InterruptedException {
         loginScreen.isDisplayed();
         DriverMethods.swipeByElem(driver.findElement(new AppiumBy.ByAccessibilityId("test-LOGIN")),
-                "up", 0.75);
+                "up", 0.75, 500);
         Thread.sleep(3000);
     }
 
@@ -230,13 +239,13 @@ public class TestCases {
     public void testOpenMenuBySwipe() throws InterruptedException {
         Dimension screensize = driver.manage().window().getSize();
         int screenWid = screensize.getWidth();
-        int screenWHei = screensize.getHeight();
-        int top = 300;
-        int left = 50;
+        int screenHei = screensize.getHeight();
+        int top = 60;
+        int left = 60;
         loginScreen.isDisplayed();
-        loginScreen.loginUser("standard_user", "secret_sauce");
+        loginScreen.loginStandardUser();
         productsScreen.isDisplayed();
-        DriverMethods.swipeByCoord(60, 60, 60, 60, "up", 0.75, 500);
+        DriverMethods.swipeByCoord(top, left, screenWid / 20, screenHei / 40, "up", 0.75, 500);
         Thread.sleep(3000);
     }
 
@@ -252,9 +261,10 @@ public class TestCases {
     @Test(testName = "dragElemToCoord")
     public void testDragElemToCoord() throws InterruptedException {
         loginScreen.isDisplayed();
-        loginScreen.loginUser("standard_user", "secret_sauce");
-//        productsScreen.isDisplayed();
-        DriverMethods.dragElemToCoord(driver.findElement(new AppiumBy.ByAccessibilityId("test-LOGIN")), 60, 60, 500);
+        loginScreen.loginStandardUser();
+        productsScreen.isDisplayed();
+        DriverMethods.dragElemToCoord(driver.findElement(By.xpath("(//android.view.ViewGroup[@content-desc=\"test-Drag Handle\"])[1]")),
+                60, 60, 500);
         Thread.sleep(500);
     }
 
@@ -265,9 +275,27 @@ public class TestCases {
         Thread.sleep(5000);
     }
 
+    @Test(testName = "Get device info")
+    public void getDeviceInfo() {
+        System.out.println(DriverMethods.getDeviceInfo());
+    }
+
+
+//android.view.ViewGroup[following-sibling::android.view.ViewGroup[@content-desc="test-ABOUT"]and preceding-sibling::android.view.ViewGroup[@content-desc="test-Close"]]
+//android.view.ViewGroup[preceding-sibling::android.view.ViewGroup[@content-desc="test-Close"]]/*[1]
+//android.view.ViewGroup[preceding-sibling::android.view.ViewGroup[@content-desc="test-Close"]]
+//android.view.ViewGroup[following-sibling::android.view.ViewGroup[@content-desc="test-ABOUT"]]
+// new UiScrollable(new UiSelector().description("Carousel")).setAsHorizontalList().scrollForward()
+// new UiScrollable(new UiSelector().description("test-Item")).setAsHorizontalList().scrollForward()
+
+
     @AfterMethod(alwaysRun = true)
     public void afterMethodCleanup() {
-        driver.terminateApp("com.swaglabsmobileapp");
+//        driver.terminateApp("com.swaglabsmobileapp");
+        driver.executeScript("mobile: terminateApp", Map.ofEntries(
+           Map.entry("appId", "com.swaglabsmobileapp"),
+           Map.entry("timeout", 1000)
+        ));
     }
 
     @AfterClass(alwaysRun = true)
