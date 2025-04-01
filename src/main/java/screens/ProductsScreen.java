@@ -15,6 +15,15 @@ public class ProductsScreen {
     private AndroidDriver driver;
     private WebDriverWait wait;
 
+    //android.view.ViewGroup[following-sibling::android.view.ViewGroup[@content-desc="test-ABOUT"]and preceding-sibling::android.view.ViewGroup[@content-desc="test-Close"]]
+//android.view.ViewGroup[preceding-sibling::android.view.ViewGroup[@content-desc="test-Close"]]/*[1]
+//android.view.ViewGroup[preceding-sibling::android.view.ViewGroup[@content-desc="test-Close"]]
+//android.view.ViewGroup[following-sibling::android.view.ViewGroup[@content-desc="test-ABOUT"]]
+// new UiScrollable(new UiSelector().description("Carousel")).setAsHorizontalList().scrollForward()
+// new UiScrollable(new UiSelector().description("test-Item")).setAsHorizontalList().scrollForward()
+
+
+
     //    @AndroidFindBy(uiAutomator = "new UiSelector().text(\"PRODUCTS\")")
     @AndroidFindBy(xpath = "//android.widget.TextView[@text=\"PRODUCTS\"]")
     private WebElement productsTextView;

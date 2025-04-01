@@ -4,7 +4,6 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
 import io.appium.java_client.service.local.flags.GeneralServerFlag;
-import io.appium.java_client.service.local.flags.ServerArgument;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -83,7 +82,6 @@ public class TestCases {
 
     @BeforeMethod(alwaysRun = true)
     public void beforeMethodSetup() {
-//        driver.activateApp("com.swaglabsmobileapp");
 //        driver.getBatteryInfo();
 //        driver.executeScript("mobile: activateApp", Map.ofEntries(
 //                Map.entry("appId", "com.swaglabsmobileapp")
@@ -279,15 +277,6 @@ public class TestCases {
     public void getDeviceInfo() {
         System.out.println(DriverMethods.getDeviceInfo());
     }
-
-
-//android.view.ViewGroup[following-sibling::android.view.ViewGroup[@content-desc="test-ABOUT"]and preceding-sibling::android.view.ViewGroup[@content-desc="test-Close"]]
-//android.view.ViewGroup[preceding-sibling::android.view.ViewGroup[@content-desc="test-Close"]]/*[1]
-//android.view.ViewGroup[preceding-sibling::android.view.ViewGroup[@content-desc="test-Close"]]
-//android.view.ViewGroup[following-sibling::android.view.ViewGroup[@content-desc="test-ABOUT"]]
-// new UiScrollable(new UiSelector().description("Carousel")).setAsHorizontalList().scrollForward()
-// new UiScrollable(new UiSelector().description("test-Item")).setAsHorizontalList().scrollForward()
-
 
     @AfterMethod(alwaysRun = true)
     public void afterMethodCleanup() {
