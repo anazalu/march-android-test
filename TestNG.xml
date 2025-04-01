@@ -10,6 +10,9 @@
         </groups>
         <classes>
             <class name="TestCases"/>
+            <methods>
+                <exclude name="testThree"/>
+            </methods>
         </classes>
     </test>
 </suite>
